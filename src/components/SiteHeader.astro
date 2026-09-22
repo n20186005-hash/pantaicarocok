@@ -1,11 +1,11 @@
 ---
 /** Design contract: navigation is a light, chart-like instrument bar—quiet, factual, and always legible. */
-import { content, type Lang } from "../data/content";
+import { content, siteName, type Lang } from "../data/content";
 interface Props { lang: Lang; homePath: string; }
 const { lang, homePath } = Astro.props; const t = content[lang]; const alternate = lang === "id" ? "/en/" : "/";
 ---
 <header class="site-header" data-site-header><div class="shell header-inner">
-  <a class="brand" href={homePath} aria-label="Pantai Carocok Guide — home"><img src="/favicon.svg" alt="" width="52" height="52" /><span class="brand-copy"><strong>Pantai Carocok</strong><small>Visitor field guide</small></span></a>
+  <a class="brand" href={homePath} aria-label={`${siteName[lang]} — home`}><img src="/favicon.svg" alt="" width="52" height="52" /><span class="brand-copy"><strong>{siteName[lang].split(" — ")[0]}</strong><small>{siteName[lang].split(" — ")[1]}</small></span></a>
   <nav class="desktop-nav" aria-label="Primary navigation">{t.nav.map(([label, href]) => <a href={`${homePath}${href}`}>{label}</a>)}</nav>
   <a class="language-link" href={alternate} data-language-link>{t.langName}</a>
 </div></header>
