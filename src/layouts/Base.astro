@@ -6,10 +6,12 @@
 import "../styles/global.css";
 import type { Lang } from "../data/content";
 
-interface Props { lang: Lang; title: string; description: string; canonicalPath: string; }
-const { lang, title, description, canonicalPath } = Astro.props;
+interface Props { lang: Lang; title: string; description: string; canonicalPath: string; alternatePath?: string; }
+const { lang, title, description, canonicalPath, alternatePath } = Astro.props;
 const siteUrl = Astro.site?.toString();
 const canonical = siteUrl ? new URL(canonicalPath, siteUrl).toString() : undefined;
+const alternateUrl = alternatePath ? new URL(alternatePath, siteUrl).toString() : undefined;
+const ogImage = siteUrl ? new URL("/images/01-pantai-carocok-bay.jpg", siteUrl).toString() : "/images/01-pantai-carocok-bay.jpg";
 ---
 <!doctype html>
 <html lang={lang}>
@@ -18,7 +20,12 @@ const canonical = siteUrl ? new URL(canonicalPath, siteUrl).toString() : undefin
     <meta name="theme-color" content="#007f82" /><meta name="description" content={description} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" /><link rel="apple-touch-icon" href="/favicon.svg" /><link rel="manifest" href="/site.webmanifest" />
     {canonical && <link rel="canonical" href={canonical} />}{canonical && <meta property="og:url" content={canonical} />}
-    <meta property="og:type" content="website" /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:image" content="/images/01-pantai-carocok-bay.jpg" />
+    {canonical && alternateUrl && (<>
+      <link rel="alternate" hreflang={lang} href={canonical} />
+      <link rel="alternate" hreflang={lang === "id" ? "en" : "id"} href={alternateUrl} />
+      <link rel="alternate" hreflang="x-default" href={lang === "id" ? canonical : alternateUrl} />
+    </>)}
+    <meta property="og:type" content="website" /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:image" content={ogImage} />
     <title>{title}</title>
     <script is:inline>
       window.enablePantaiAnalytics = function () {
