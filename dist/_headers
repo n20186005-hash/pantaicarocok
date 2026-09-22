@@ -1,0 +1,8 @@
+# Transport & security headers for pantaicarocok.com
+# (HTTPS enforcement itself is handled at the edge via Cloudflare “Always Use HTTPS”.)
+/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: default-src 'self'; img-src 'self' data: https://www.google.com https://maps.googleapis.com https://maps.gstatic.com https://www.google-analytics.com; frame-src https://www.google.com https://www.youtube.com; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com

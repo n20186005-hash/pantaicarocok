@@ -1,2 +1,5 @@
 User-agent: *
 Allow: /
+
+Host: pantaicarocok.com
+Sitemap: https://pantaicarocok.com/sitemap-index.xml

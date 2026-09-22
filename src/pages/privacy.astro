@@ -1,5 +1,6 @@
 ---
 /** Design contract: Indonesian legal reading retains calm editorial spacing and the coastal guide’s honest tone. */
+import { withSiteName } from "../data/content";
 import Base from "../layouts/Base.astro"; import LegalPage from "../components/LegalPage.astro";
 ---
-<Base lang="id" title="Kebijakan Privasi — Pantai Carocok Guide" description="Kebijakan privasi Pantai Carocok Guide." canonicalPath="/privacy/" alternatePath="/en/privacy/"><LegalPage lang="id" kind="privacy" /></Base>
+<Base lang="id" title={withSiteName("id", "Kebijakan Privasi")} description="Kebijakan privasi Pantai Carocok Guide." canonicalPath="/privacy/" alternatePath="/en/privacy/"><LegalPage lang="id" kind="privacy" /></Base>

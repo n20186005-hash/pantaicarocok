@@ -4,7 +4,7 @@
  * generous editorial spacing, and an uncluttered non-commercial reading experience.
  */
 import "../styles/global.css";
-import type { Lang } from "../data/content";
+import { siteName, type Lang } from "../data/content";
 
 interface Props { lang: Lang; title: string; description: string; canonicalPath: string; alternatePath?: string; }
 const { lang, title, description, canonicalPath, alternatePath } = Astro.props;
@@ -25,7 +25,7 @@ const ogImage = siteUrl ? new URL("/images/01-pantai-carocok-bay.jpg", siteUrl).
       <link rel="alternate" hreflang={lang === "id" ? "en" : "id"} href={alternateUrl} />
       <link rel="alternate" hreflang="x-default" href={lang === "id" ? canonical : alternateUrl} />
     </>)}
-    <meta property="og:type" content="website" /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" /><meta property="og:site_name" content={siteName[lang]} /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:image" content={ogImage} />
     <title>{title}</title>
     <script is:inline>
       window.enablePantaiAnalytics = function () {

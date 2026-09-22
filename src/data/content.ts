@@ -1,4 +1,7 @@
 export type Lang = "id" | "en";
+// SEO site name follows the “attraction + city + travel guide” pattern.
+export const siteName = { id: "Pantai Carocok Painan — Panduan Wisata", en: "Pantai Carocok Painan — Travel Guide" } as const;
+export const withSiteName = (lang: Lang, title: string) => `${title} | ${siteName[lang]}`;
 type TextItem = { title: string; text: string };
 
 export const content = {
