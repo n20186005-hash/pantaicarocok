@@ -1,5 +1,5 @@
 # Transport & security headers for pantaicarocok.com
-# (HTTPS enforcement itself is handled at the edge via Cloudflare “Always Use HTTPS”.)
+# HTTPS/www canonical redirects are handled by src/worker.ts.
 /*
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
   X-Content-Type-Options: nosniff

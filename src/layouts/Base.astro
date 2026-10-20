@@ -26,18 +26,26 @@ const ogImage = siteUrl ? new URL("/images/01-pantai-carocok-bay.jpg", siteUrl).
       <link rel="alternate" hreflang="x-default" href={lang === "id" ? canonical : alternateUrl} />
     </>)}
     <meta property="og:type" content="website" /><meta property="og:site_name" content={siteName[lang]} /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:image" content={ogImage} />
-    <title>{title}</title>
+    <meta name="twitter:card" content="summary_large_image" /><meta name="twitter:image" content={ogImage} /><title>{title}</title>
     <script is:inline>
-      window.enablePantaiAnalytics = function () {
-        if (document.querySelector("script[data-pantai-ga4]")) return;
-        const script = document.createElement("script");
-        script.async = true; script.src = "https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP"; script.dataset.pantaiGa4 = "true"; document.head.appendChild(script);
+    (() => {
+      const GA_ID = 'G-HXM22WWPKP';
+      window.setPantaiAnalytics = function (enabled) {
+        window['ga-disable-' + GA_ID] = !enabled;
+        if (!enabled || document.querySelector('script[data-pantai-ga4]')) return;
         window.dataLayer = window.dataLayer || [];
         function gtag(){ window.dataLayer.push(arguments); }
         window.gtag = window.gtag || gtag;
-        window.gtag("js", new Date()); window.gtag("config", "G-HXM22WWPKP", { anonymize_ip: true });
+        window.gtag('js', new Date()); window.gtag('config', GA_ID, { anonymize_ip: true });
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        script.dataset.pantaiGa4 = 'true'; document.head.appendChild(script);
       };
-      if (localStorage.getItem("pantai-analytics") === "granted") window.enablePantaiAnalytics();
+      let granted = false;
+      try { granted = localStorage.getItem('pantai-analytics') === 'granted'; } catch {}
+      window.setPantaiAnalytics(granted);
+    })();
     </script>
   </head>
   <body><a class="skip-link" href="#main">Skip to content</a><slot /></body>

@@ -1,5 +1,5 @@
 interface Window {
-  enablePantaiAnalytics?: () => void;
+  setPantaiAnalytics?: (enabled: boolean) => void;
   dataLayer?: unknown[];
   gtag?: (...args: unknown[]) => void;
 }
