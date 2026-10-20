@@ -9,5 +9,5 @@ export default defineConfig({
   site: site || undefined,
   output: "static",
   vite: { plugins: [tailwindcss()] },
-  integrations: site ? [sitemap()] : [],
+  integrations: site ? [sitemap({ filter: (page) => !page.endsWith("/404/") })] : [],
 });
