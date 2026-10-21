@@ -7,7 +7,7 @@
 | `src/` | Astro 页面、组件、双语内容、样式和结构化数据。 |
 | `public/` | favicon、manifest 和 robots 配置。 |
 | `dist/` | 已构建的静态网站输出。 |
-| `public/images/` | 已有景点参考图片、航图纹理与档案插图；品牌徽记为 `public/favicon.svg`。 |
+| `public/images/` | 项目原创海岸示意图、航图纹理与档案插图；品牌徽记为 `public/favicon.svg`。 |
 | `wrangler.json` | Cloudflare Workers Static Assets 配置。 |
 | `package.json`、`pnpm-lock.yaml` | 精确锁定的依赖和构建脚本。 |
 | `ideas.md`、`research-notes.md` | 设计方向与公开资料研究记录。 |

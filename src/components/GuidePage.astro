@@ -1,5 +1,5 @@
 ---
-/** Design contract: an asymmetric reference-image hero, teal chart annotations, editorial columns, and practical guidance. */
+/** Design contract: an asymmetric illustrated hero, teal chart annotations, editorial columns, and practical guidance. */
 import { content, type Lang } from "../data/content";
 import SiteHeader from "./SiteHeader.astro";
 import SiteFooter from "./SiteFooter.astro";
@@ -12,7 +12,7 @@ const faqPage = { "@context": "https://schema.org", "@type": "FAQPage", mainEnti
 ---
 <SiteHeader lang={lang} homePath={homePath} />
 <main id="main">
-  <section class="hero" aria-labelledby="hero-title"><div class="hero-photo" role="img" aria-label="Pantai Carocok and its offshore islands"></div><div class="hero-scrim"></div><img class="hero-chart" src="/images/03-strait-chart-texture.png" alt="" />
+  <section class="hero" aria-labelledby="hero-title"><div class="hero-photo" role="img" aria-label={isId ? "Ilustrasi asli proyek tentang pesisir imajiner; bukan foto atau gambaran geografis Pantai Carocok" : "Original project illustration of an imaginary coast; not a photograph or geographical depiction of Pantai Carocok"}></div><div class="hero-scrim"></div><img class="hero-chart" src="/images/03-strait-chart-texture.png" alt="" />
     <div class="shell hero-layout"><div class="hero-copy"><p class="eyebrow eyebrow--light">{t.hero.eyebrow}</p><h1 id="hero-title">{t.hero.title.split("\n").map((line) => <>{line}<br /></>)}<span class="hero-place">Painan · Pesisir Selatan</span></h1><p class="hero-lead">{t.hero.lead}</p><div class="hero-actions"><a class="button button--warm" href={`#${ids.visit}`}>{t.hero.primary}<span aria-hidden="true">↓</span></a><a class="button button--ghost" href={`#${ids.map}`}>{t.hero.secondary}<span aria-hidden="true">↗</span></a></div><p class="photo-credit">{t.hero.photo}</p></div>
       <aside class="hero-facts" aria-label={isId ? "Informasi ringkas" : "At a glance"}><div class="fact-line"><span>{t.hero.ratingLabel}</span><strong>{t.hero.rating}</strong><small>{t.hero.reviews}</small></div><div class="fact-line"><span>{t.hero.categoryLabel}</span><strong>{t.hero.category}</strong></div><div class="fact-line"><span>{t.hero.locationLabel}</span><strong>{t.hero.location}</strong></div><p class="fact-note">{t.hero.note}</p></aside></div>
   </section>
