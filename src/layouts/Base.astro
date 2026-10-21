@@ -11,7 +11,7 @@ const { lang, title, description, canonicalPath, alternatePath } = Astro.props;
 const siteUrl = Astro.site?.toString();
 const canonical = siteUrl ? new URL(canonicalPath, siteUrl).toString() : undefined;
 const alternateUrl = alternatePath ? new URL(alternatePath, siteUrl).toString() : undefined;
-const ogImage = siteUrl ? new URL("/images/01-pantai-carocok-bay.jpg", siteUrl).toString() : "/images/01-pantai-carocok-bay.jpg";
+const ogImage = siteUrl ? new URL("/images/coastal-bay-social.png", siteUrl).toString() : "/images/coastal-bay-social.png";
 ---
 <!doctype html>
 <html lang={lang}>

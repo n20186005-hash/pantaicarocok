@@ -22,6 +22,6 @@ pnpm check
 pnpm build
 ```
 
-图片位于 `public/images/`，使用本地 `/images/` 路径，由 Astro 原样复制到 `dist/images/`。无需另行上传到外部静态存储。图片来源资料见 `images/README.md`；既有 TripAdvisor 归因不代表已核实摄影许可。
+图片位于 `public/images/`，使用本地 `/images/` 路径，由 Astro 原样复制到 `dist/images/`。无需另行上传到外部静态存储。图片来源资料见 `images/README.md`；未核实授权的旧照片已移除，首屏与岸线采用明确标注的项目原创海岸示意图。
 
 根 `wrangler.json` 配置 Worker 与 `ASSETS`。Worker 保留路径和查询参数，将已知 HTTP/www 地址规范到 HTTPS 主域；缺失页面返回真实 404 和 noindex。用根配置执行 `wrangler deploy`；本地技术测试为 `node scripts/worker-test.mjs` 与 `node scripts/consent-test.mjs`。
