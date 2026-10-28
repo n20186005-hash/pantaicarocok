@@ -1,0 +1,142 @@
+---
+/** Design contract: topic pages reuse the Strait Chart system—editorial columns, contour rules, and honest, non-commercial guidance. */
+import { content, siteName, type Lang } from "../data/content";
+import type { Topic } from "../data/topic-types";
+import { resolveRelated, groupLabel } from "../data/topic-registry";
+import SiteHeader from "./SiteHeader.astro";
+import SiteFooter from "./SiteFooter.astro";
+
+interface Props {
+  lang: Lang;
+  topic: Topic;
+  homePath: string;
+  canonicalPath: string;
+  alternatePath: string;
+}
+
+const { lang, topic, homePath, canonicalPath, alternatePath } = Astro.props;
+const isId = lang === "id";
+const t = content[lang];
+const tc = topic[lang];
+
+const groupName = groupLabel[topic.group][lang];
+const related = tc.related
+  .map((slug) => resolveRelated(slug, lang))
+  .filter((item): item is NonNullable<typeof item> => Boolean(item));
+
+const homeCrumb = isId ? "Beranda" : "Home";
+const topicUrl = new URL(canonicalPath, Astro.site).href;
+const homeUrl = new URL(homePath, Astro.site).href;
+
+const webPage = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: tc.h1,
+  description: tc.description,
+  url: topicUrl,
+  inLanguage: isId ? "id-ID" : "en",
+  isPartOf: { "@type": "WebSite", name: siteName[lang], url: homeUrl },
+};
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: homeCrumb, item: homeUrl },
+    { "@type": "ListItem", position: 2, name: tc.h1, item: topicUrl },
+  ],
+};
+const faqPage = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: tc.faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+const crumbNav = isId ? "Panduan topik" : "Topic guide";
+const updatedLabel = isId ? "Diperbarui" : "Updated";
+---
+<SiteHeader lang={lang} homePath={homePath} alternatePath={alternatePath} />
+<main id="main">
+  <section class="section topic-hero" aria-labelledby="topic-title">
+    <div class="shell">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href={homePath}>{homeCrumb}</a><span aria-hidden="true">·</span>
+        <span>{crumbNav}</span><span aria-hidden="true">·</span>
+        <span aria-current="page">{groupName}</span>
+      </nav>
+      <p class="eyebrow">{groupName}</p>
+      <h1 id="topic-title">{tc.h1}</h1>
+      <p class="lead-copy topic-lead">{tc.lead}</p>
+      <p class="topic-updated"><small>{updatedLabel} · {tc.updated}</small></p>
+    </div>
+  </section>
+
+  <section class="section topic-body" aria-label={tc.h1}>
+    <div class="shell topic-grid">
+      <div class="topic-sections">
+        {tc.sections.map((section) => (
+          <article class="topic-section">
+            {section.kicker && <p class="eyebrow">{section.kicker}</p>}
+            <h2>{section.title}</h2>
+            {section.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+            {section.bullets && (
+              <ul class="topic-bullets">
+                {section.bullets.map((bullet) => <li>{bullet}</li>)}
+              </ul>
+            )}
+            {section.callout && (
+              <aside class="topic-callout">
+                <h3>{section.callout.title}</h3>
+                <p>{section.callout.text}</p>
+              </aside>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section faq-section topic-faq" aria-labelledby="topic-faq-title">
+    <div class="shell faq-grid">
+      <div class="section-intro">
+        <p class="eyebrow">{isId ? "Tanya jawab" : "Questions"}</p>
+        <h2 id="topic-faq-title">{isId ? "Sebelum ke sana" : "Before you go"}</h2>
+      </div>
+      <div class="faq-list">
+        {tc.faqs.map((item, index) => (
+          <details>
+            <summary><span>{String(index + 1).padStart(2, "0")}</span>{item.q}<b>+</b></summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="section topic-related" aria-labelledby="topic-related-title">
+      <div class="shell">
+        <p class="eyebrow">{isId ? "Baca juga" : "Read also"}</p>
+        <h2 id="topic-related-title">{isId ? "Panduan terkait" : "Related guides"}</h2>
+        <div class="related-grid">
+          {related.map((item) => {
+            const href = isId ? `/${item.slug}/` : `/en/${item.slug}/`;
+            return (
+              <a class="related-card" href={href}>
+                <small>{groupLabel[item.group][lang]}</small>
+                <h3>{item.title}</h3>
+                <span class="related-go" aria-hidden="true">→</span>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+</main>
+<SiteFooter lang={lang} homePath={homePath} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(webPage).replace(/</g, "\\u003c")}></script>
+<script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumb).replace(/</g, "\\u003c")}></script>
+<script is:inline type="application/ld+json" set:html={JSON.stringify(faqPage).replace(/</g, "\\u003c")}></script>

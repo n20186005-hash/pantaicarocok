@@ -3,6 +3,7 @@
 import { content, type Lang } from "../data/content";
 import SiteHeader from "./SiteHeader.astro";
 import SiteFooter from "./SiteFooter.astro";
+import TopicLinks from "./TopicLinks.astro";
 interface Props { lang: Lang; }
 const { lang } = Astro.props; const t = content[lang]; const isId = lang === "id"; const homePath = isId ? "/" : "/en/";
 const ids = isId ? { about: "tentang", visit: "kunjungan", transport: "transportasi", facilities: "fasilitas", around: "sekitar", map: "peta" } : { about: "about", visit: "visit", transport: "transport", facilities: "facilities", around: "around", map: "map" };
@@ -25,6 +26,7 @@ const faqPage = { "@context": "https://schema.org", "@type": "FAQPage", mainEnti
   <section class="section map-section" id={ids.map} aria-labelledby="map-title"><div class="shell map-layout"><div><p class="eyebrow eyebrow--light">{t.map.kicker}</p><h2 id="map-title">{t.map.title}</h2><p>{t.map.text}</p><a class="button button--warm" href="https://maps.app.goo.gl/QLHed3sAuh41ZDTp7" target="_blank" rel="noreferrer">{t.map.open}<span aria-hidden="true">↗</span></a></div><div class="map-frame"><iframe title="Pantai Carocok map" src="https://www.google.com/maps?q=-1.3520247,100.5670321&amp;output=embed" width="600" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></div></section>
   <section class="section faq-section" id="faq" aria-labelledby="faq-title"><div class="shell faq-grid"><div class="section-intro"><p class="eyebrow">{t.faq.kicker}</p><h2 id="faq-title">{t.faq.title}</h2></div><div class="faq-list">{t.faq.items.map((item, index) => <details><summary><span>{String(index + 1).padStart(2, "0")}</span>{item.q}<b>+</b></summary><p>{item.a}</p></details>)}</div></div></section>
   <section class="section source-section" aria-labelledby="sources-title"><div class="shell source-grid"><div><p class="eyebrow">{t.references.kicker}</p><h2 id="sources-title">{t.references.title}</h2></div><div><p>{t.references.text}</p><ul>{sourceLinks.map(([label, href]) => <li><a href={href} target="_blank" rel="noreferrer">{label}<span aria-hidden="true">↗</span></a></li>)}</ul></div></div></section>
+  <TopicLinks lang={lang} />
 </main>
 <SiteFooter lang={lang} homePath={homePath} />
 <script is:inline type="application/ld+json" set:html={JSON.stringify(attractionSchema).replace(/</g, "\\u003c")}></script><script is:inline type="application/ld+json" set:html={JSON.stringify(faqPage).replace(/</g, "\\u003c")}></script>

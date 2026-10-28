@@ -1,0 +1,19 @@
+---
+/** Design contract: English topic pages mirror the Indonesian guide at the /en/ path. */
+import { siteName } from "../../data/content";
+import Base from "../../layouts/Base.astro";
+import TopicPage from "../../components/TopicPage.astro";
+import { allTopics } from "../../data/topic-registry";
+
+export const getStaticPaths = () =>
+  allTopics.map((topic) => ({
+    params: { topic: topic.slug },
+    props: { topic },
+  }));
+
+const { topic } = Astro.props;
+const tc = topic.en;
+---
+<Base lang="en" title={tc.title} description={tc.description} canonicalPath={`/en/${topic.slug}/`} alternatePath={`/${topic.slug}/`}>
+  <TopicPage lang="en" topic={topic} homePath="/en/" canonicalPath={`/en/${topic.slug}/`} alternatePath={`/${topic.slug}/`} />
+</Base>

@@ -1,0 +1,37 @@
+---
+/** Design contract: homepage topic cluster—internal links that build the thematic hub across the Strait Chart guide. */
+import { content, type Lang } from "../data/content";
+import { topicGroups } from "../data/topic-registry";
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const isId = lang === "id";
+const heading = isId ? "Panduan topik" : "Topic guides";
+const intro = isId
+  ? "Jelajahi panduan tertulis tentang kunjungan, pulau, makan, dan rencana tanpa janji layanan hari ini."
+  : "Explore written guides on visiting, islands, food, and plans—without promises about today’s services.";
+---
+<section class="section topic-cluster" aria-labelledby="cluster-title">
+  <div class="shell">
+    <div class="section-intro">
+      <p class="eyebrow">{isId ? "Indeks" : "Index"}</p>
+      <h2 id="cluster-title">{heading}</h2>
+      <p>{intro}</p>
+    </div>
+    <div class="cluster-groups">
+      {topicGroups.map((group) => (
+        <div class="cluster-group">
+          <h3>{group.label[lang]}</h3>
+          <ul>
+            {group.topics.map((topic) => {
+              const href = isId ? `/${topic.slug}/` : `/en/${topic.slug}/`;
+              return (
+                <li><a href={href}>{topic.linkTitle[lang]}</a></li>
+              );
+            })}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

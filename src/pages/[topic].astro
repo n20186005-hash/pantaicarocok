@@ -1,0 +1,19 @@
+---
+/** Design contract: Indonesian topic pages live at the root, mirroring the Strait Chart guide. */
+import { siteName } from "../data/content";
+import Base from "../layouts/Base.astro";
+import TopicPage from "../components/TopicPage.astro";
+import { allTopics } from "../data/topic-registry";
+
+export const getStaticPaths = () =>
+  allTopics.map((topic) => ({
+    params: { topic: topic.slug },
+    props: { topic },
+  }));
+
+const { topic } = Astro.props;
+const tc = topic.id;
+---
+<Base lang="id" title={tc.title} description={tc.description} canonicalPath={`/${topic.slug}/`} alternatePath={`/en/${topic.slug}/`}>
+  <TopicPage lang="id" topic={topic} homePath="/" canonicalPath={`/${topic.slug}/`} alternatePath={`/en/${topic.slug}/`} />
+</Base>
