@@ -71,3 +71,4 @@ main :is(section,article,div,aside,figure){min-width:0;}
 .cluster-group a:hover { color:var(--teal); padding-left:7px; }
 @media (max-width:900px) { .cluster-groups { grid-template-columns:1fr; gap:34px; } .related-grid { grid-template-columns:1fr; } .topic-body { padding:74px 0; } .topic-hero { padding:128px 0 50px; } }
 @media (max-width:600px) { .related-grid { grid-template-columns:1fr; } }
+.hero-photo { background-image: url("/images/01-pantai-carocok-bay.jpg"); }
