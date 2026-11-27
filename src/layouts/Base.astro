@@ -8,6 +8,7 @@ import { siteName, type Lang } from "../data/content";
 
 interface Props { lang: Lang; title: string; description: string; canonicalPath: string; alternatePath?: string; }
 const { lang, title, description, canonicalPath, alternatePath } = Astro.props;
+const noindex = /\/(?:privacy|terms|cookies)\/?$/.test(canonicalPath);
 const siteUrl = Astro.site?.toString();
 const canonical = siteUrl ? new URL(canonicalPath, siteUrl).toString() : undefined;
 const alternateUrl = alternatePath ? new URL(alternatePath, siteUrl).toString() : undefined;
@@ -17,6 +18,7 @@ const ogImage = siteUrl ? new URL("/images/coastal-bay-social.png", siteUrl).toS
 <html lang={lang}>
   <head>
     <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <meta name="theme-color" content="#007f82" /><meta name="description" content={description} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" /><link rel="apple-touch-icon" href="/favicon.svg" /><link rel="manifest" href="/site.webmanifest" />
     {canonical && <link rel="canonical" href={canonical} />}{canonical && <meta property="og:url" content={canonical} />}
@@ -48,5 +50,5 @@ const ogImage = siteUrl ? new URL("/images/coastal-bay-social.png", siteUrl).toS
     })();
     </script>
   </head>
-  <body><a class="skip-link" href="#main">Skip to content</a><slot /></body>
+  <body><a class="skip-link" href="#main">{lang === "id" ? "Langsung ke isi" : "Skip to content"}</a><slot /></body>
 </html>

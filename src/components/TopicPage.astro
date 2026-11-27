@@ -1,8 +1,9 @@
 ---
 /** Design contract: topic pages reuse the Strait Chart system—editorial columns, contour rules, and honest, non-commercial guidance. */
-import { content, siteName, type Lang } from "../data/content";
+import { siteName, type Lang } from "../data/content";
 import type { Topic } from "../data/topic-types";
 import { resolveRelated, groupLabel } from "../data/topic-registry";
+import { topicContext } from "../data/visitor-sources";
 import SiteHeader from "./SiteHeader.astro";
 import SiteFooter from "./SiteFooter.astro";
 
@@ -16,8 +17,8 @@ interface Props {
 
 const { lang, topic, homePath, canonicalPath, alternatePath } = Astro.props;
 const isId = lang === "id";
-const t = content[lang];
 const tc = topic[lang];
+const context = topicContext(topic.slug, topic.group, lang);
 
 const groupName = groupLabel[topic.group][lang];
 const related = tc.related
@@ -98,6 +99,11 @@ const updatedLabel = isId ? "Diperbarui" : "Updated";
     </div>
   </section>
 
+  {topic.slug === "foto-sunset" && <section class="section topic-gallery" aria-label={isId ? "Foto arsip Carocok" : "Carocok archive photographs"}><div class="shell related-grid">
+    <figure><img src="/images/01-pantai-carocok-bay.jpg" alt={isId ? "Pemandangan teluk dari arsip situs Carocok" : "Bay view from the Carocok site archive"} loading="lazy" width="1200" height="720" /><figcaption>{isId ? "Pemandangan teluk · arsip situs. Lihat garis pantai dan lapisan pulau sebagai ide komposisi." : "Bay view · site archive. Notice the coastline and island layers as composition ideas."}</figcaption></figure>
+    <figure><img src="/images/02-pantai-carocok-shore.jpg" alt={isId ? "Perahu dan pesisir dari arsip situs Carocok" : "Boats and shoreline from the Carocok site archive"} loading="lazy" width="550" height="412" /><figcaption>{isId ? "Perahu dan pesisir · arsip situs. Beri ruang bagi kegiatan dermaga saat mengambil foto." : "Boats and shoreline · site archive. Leave room for jetty activity when taking photographs."}</figcaption></figure>
+  </div></section>}
+  <section class="section source-section" aria-labelledby="topic-sources-title"><div class="shell source-grid"><div><p class="eyebrow">{isId ? "Lokasi dan rujukan" : "Location and sources"}</p><h2 id="topic-sources-title">{isId ? "Rencanakan dari tempatnya" : "Plan from the location"}</h2><a href={context.map} target="_blank" rel="noreferrer">{context.place} · Google Maps ↗</a></div><div><p>{isId ? "Publikasi bertanggal berikut memberi konteks lokasi dan sejarah. Saran persiapan pada halaman ini bukan konfirmasi layanan, harga atau akses hari ini." : "The dated publications below provide location and historical context. Planning advice on this page does not confirm today’s services, prices or access."}</p><ul>{context.sources.map(source => <li><a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a></li>)}</ul></div></div></section>
   <section class="section faq-section topic-faq" aria-labelledby="topic-faq-title">
     <div class="shell faq-grid">
       <div class="section-intro">
