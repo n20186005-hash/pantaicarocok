@@ -72,3 +72,20 @@ main :is(section,article,div,aside,figure){min-width:0;}
 @media (max-width:900px) { .cluster-groups { grid-template-columns:1fr; gap:34px; } .related-grid { grid-template-columns:1fr; } .topic-body { padding:74px 0; } .topic-hero { padding:128px 0 50px; } }
 @media (max-width:600px) { .related-grid { grid-template-columns:1fr; } }
 .hero-photo { background-image: url("/images/01-pantai-carocok-bay.jpg"); }
+
+/* Archive photographs keep their intrinsic proportions on topic pages. */
+.topic-gallery figure { margin: 0; }
+.topic-gallery img { width: 100%; height: auto; display: block; }
+.topic-gallery figcaption { margin-top: .8rem; line-height: 1.6; font-size: .875rem; }
+.topic-shortcuts { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; margin-top: 1.4rem; font-size: .9rem; }
+.topic-shortcuts a { text-underline-offset: .25em; }
+/* Chart annotations follow the document language. */
+html:lang(en) .orientation::after { content: "01 · BAY"; }
+html:lang(en) .story-section::after { content: "02 · ISLANDS"; }
+html:lang(en) .visit-section::after { content: "03 · PLANNING"; }
+html:lang(en) .transport-section::after { content: "04 · ROUTE"; }
+html:lang(en) .facility-section::after { content: "05 · NOTES"; }
+html:lang(en) .around-section::after { content: "06 · COAST"; }
+html:lang(en) .faq-section::after { content: "08 · QUESTIONS"; }
+html:lang(en) .facility-art::after { content: "-1°21′ · 100°34′ · COASTAL NOTES"; }
+html:lang(id) .legal-grid aside::before { content: "08 · CATATAN"; }
